@@ -1,4 +1,4 @@
-import Payment from "../models/paymentModel"
+import Payment from "../models/paymentModel.js"
 
 // @desc    Create a new payment
 // @route   POST /api/payments

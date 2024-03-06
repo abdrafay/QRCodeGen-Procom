@@ -3,8 +3,10 @@ import express from 'express'
 const app = express()
 
 import dotenv from 'dotenv'
-import Database from './config/db'
-import {notFound, errorHandler} from './middleware/errorMiddleware'
+import Database from './config/db.js'
+import {notFound, errorHandler} from './middleware/errorMiddleware.js'
+import paymentRoutes from './routes/paymentRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 // Load environment variables
 dotenv.config()
@@ -16,8 +18,8 @@ new Database()
 app.use(express.json())
 
 // Routes
-app.use('/api/payment', require('./routes/paymentRoutes'))
-app.use('/api/auth', require('./routes/authRoutes'))
+app.use('/api/payment', paymentRoutes)
+app.use('/api/auth', userRoutes)
 
 // Error handling middleware
 app.use(notFound)

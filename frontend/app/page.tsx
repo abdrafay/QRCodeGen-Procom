@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <div>
-      Hello
+      Landing Page Design will show here
     </div>
   );
 }
