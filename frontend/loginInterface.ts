@@ -8,6 +8,6 @@ export interface UserInterface {
 }
 
 export interface LoginInterface {
-    username: string;
+    email: string;
     password: string;
 }

@@ -1,8 +1,8 @@
 import { Wallet2 } from "lucide-react";
 import React from "react";
-import LoginForm from "./form";
+import RegisterForm from "./form";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return <div className="p-5">
     <Logo />
     <h1 className="font-bold text-3xl text-center mt-6">
@@ -10,11 +10,11 @@ const LoginPage = () => {
       <br />
       <span className="text-cyan-500">Customer Portal</span> account
     </h1>
-    <LoginForm />
+    <RegisterForm />
   </div>;
 };
 
-export default LoginPage;
+export default RegisterPage;
 
 const Logo = () => {
   return (

@@ -6,7 +6,7 @@ const paymentSchema = mongoose.Schema(
             type: Number,
             required: true
         },
-        customerBankName: {
+        customerName: {
             type: String,
             required: true
         },
@@ -18,6 +18,18 @@ const paymentSchema = mongoose.Schema(
             type: String,
             required: true,
             default: 'pending'
+        },
+        customerAccountNo: {
+            type: String,
+            required: true
+        },
+        customerBankName: {
+            type: String,
+            required: true
+        },
+        merchantAccountNo: {
+            type: String,
+            required: true
         },
         merchant: {
             type: mongoose.Schema.Types.ObjectId,

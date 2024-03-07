@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-
+import axios from 'axios'
 // hooks
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Control, useForm } from "react-hook-form"
@@ -51,7 +51,7 @@ const defaultValues = {
     password: "",
 }
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const router = useRouter()
     const [buttonLoading, setButtonLoading] = useState<boolean>(false)
     const form = useForm<z.infer<typeof formSchema>>({
@@ -73,10 +73,21 @@ const LoginForm = () => {
         }
     }
     useEffect(() => {
+
+
         const run = async () => {
             const session = await getSession()
+            console.log(session,'session')
             if(session) {
-                router.push('/customer')
+                const {data, status} = await axios.get('http://localhost:5000/api/auth/profile', {
+                    headers: {
+                        Authorization: `Bearer ${session}`
+                    }                    
+                })
+                if(status === 200) {
+                    router.push(`/${data.role}`)
+                }
+                // router.push('/customer')
             }
         }
         run()
@@ -162,5 +173,5 @@ const LoginForm = () => {
     )
 }
 
-export default LoginForm
+export default RegisterForm
 

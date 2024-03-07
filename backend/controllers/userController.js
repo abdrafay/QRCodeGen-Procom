@@ -62,11 +62,11 @@ const registerUser = async (req, res) => {
 }
 
 // @desc    Get user profile
-// @route   GET /api/users/:id
+// @route   GET /api/users/profile
 // @access  Private
 
 const getUserProfile = async (req, res) => {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.user._id)
 
     if (user) {
         res.json({

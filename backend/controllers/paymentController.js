@@ -1,13 +1,14 @@
 import Payment from "../models/paymentModel.js"
-
+import User from "../models/userModel.js"
 // @desc    Create a new payment
 // @route   POST /api/payments
 // @access  Private
 
 const createPaymentRequest = async (req, res) => {
-    const { paymentAmount, customerBankName, paymentPurpose, customerAccountNo } = req.body
+    const { paymentAmount, customerBank, paymentPurpose, customerAccountNo, customerName, merchantAccountNo } = req.body
+
     
-    const customer = await User.findOne({ accountNo: customerAccountNo })
+    const customer = await User.findOne({ username: customerName })
 
     if(!customer)
     {
@@ -15,11 +16,23 @@ const createPaymentRequest = async (req, res) => {
         throw new Error('Customer not found')
         
     } else {
-        if (paymentAmount && customerBankName && paymentPurpose) {
+        console.log({
+            paymentAmount,
+            customerBank,
+            paymentPurpose,
+            customerAccountNo,
+            customerName,
+            merchantAccountNo
+        
+        }, 'body')
+        if (paymentAmount && customerBank && paymentPurpose && customerAccountNo && customerName && merchantAccountNo) {
             const payment = new Payment({
-                paymentAmount,
-                customerBankName,
+                paymentAmount: parseFloat(paymentAmount),
+                customerBankName: customerBank,
                 paymentPurpose,
+                customerAccountNo,
+                customerName,
+                merchantAccountNo,
                 merchant: req.user._id,
                 customer: customer._id
             })
@@ -62,6 +75,22 @@ const getMerchantPaymentRequest = async (req, res) => {
     }
 }
 
+// @desc    Get all customers of a merchant
+// @route   GET /api/payment/merchant/customers
+// @access  Private
+
+const getMerchantCustomers = async (req, res) => {
+    const customers = await Payment.find({merchant: req.user._id}).distinct('customer')
+    if(customers) {
+        // now get the customer details but do not send the password
+        const customerDetails = await User.find({_id: {$in: customers}}, {password: 0})
+        res.status(200).json(customerDetails)
+    } else {
+        res.status(404)
+        throw new Error('No customers found')
+    }
+}
+
 
 // @desc    Update payment request
 // @route   PUT /api/payments/:id
@@ -86,5 +115,6 @@ export {
     createPaymentRequest,
     getCustomerPaymentRequest,
     updatePaymentRequest,
-    getMerchantPaymentRequest
+    getMerchantPaymentRequest,
+    getMerchantCustomers
 }

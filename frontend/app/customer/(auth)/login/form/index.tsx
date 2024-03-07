@@ -6,10 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Control, useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { getSession, register } from '@/lib'
+import { getSession, login } from '@/lib'
 import { useRouter } from "next/navigation";
-import { UserInterface } from '@/loginInterface'
+import { LoginInterface } from '@/loginInterface'
 import axios from 'axios'
+
 
 // UI elements
 import { Button } from "@/components/ui/button"
@@ -25,18 +26,10 @@ import {
 import { Input } from "@/components/ui/input"
 
 const formSchema = z.object({
-    username: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-    accountNo: z.string().min(2, {
-        message: "Account No must be at least 2 characters.",
-    }),
     email: z.string().email({
         message: "Please enter a valid email address.",
     }),
-    phoneNo: z.string().min(10, {
-        message: "Please enter a valid phone number.",
-    }),
+    
     password: z.string().min(8, {
         message: "Password must be at least 8 characters.",
     }),
@@ -44,14 +37,11 @@ const formSchema = z.object({
 })
 
 const defaultValues = {
-    username: "",
-    accountno: "",
     email: "",
-    phone: "",
     password: "",
 }
 
-const RegisterForm = () => {
+const LoginForm = () => {
     const router = useRouter()
     const [buttonLoading, setButtonLoading] = useState<boolean>(false)
     const form = useForm<z.infer<typeof formSchema>>({
@@ -61,14 +51,11 @@ const RegisterForm = () => {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         // login(values as LoginInterface)
-        const AllValues = {
-            ...values,
-            role: 'customer'
-        }
+        
         setButtonLoading(true)
-        const registered = await register(AllValues as UserInterface)
+        const loggedIn = await login(values as LoginInterface)
         setButtonLoading(false)
-        if(registered) {
+        if(loggedIn) {
             router.push('/customer')
         }
     }
@@ -96,33 +83,6 @@ const RegisterForm = () => {
     return (
     <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 my-5">
-           
-            <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                    <FormItem>
-                        <FormLabel>Username</FormLabel>
-                        <FormControl>
-                            <Input {...field} placeholder='Enter username'/>
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
-                )}
-            />
-            <FormField
-            control={form.control}
-            name="accountNo"
-            render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Account No</FormLabel>
-                    <FormControl>
-                        <Input {...field} placeholder='Enter account no'/>
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-            )}
-            />
             <FormField
             control={form.control}
             name="email"
@@ -136,19 +96,7 @@ const RegisterForm = () => {
                 </FormItem>
             )}
             />
-            <FormField
-            control={form.control}
-            name='phoneNo'
-            render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                        <Input {...field} type="tel" placeholder='Enter email'/>
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-            )}
-            />
+            
             <FormField
             control={form.control}
             name='password'
@@ -173,5 +121,5 @@ const RegisterForm = () => {
     )
 }
 
-export default RegisterForm
+export default LoginForm
 

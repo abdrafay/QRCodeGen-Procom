@@ -1,6 +1,6 @@
 import { Wallet2 } from "lucide-react";
 import React from "react";
-import LoginForm from "./form";
+import RegisterForm from "./form";
 
 const LoginPage = () => {
   return <div className="p-5">
@@ -10,7 +10,7 @@ const LoginPage = () => {
       <br />
       <span className="text-purple-500">PayHabib</span> account
     </h1>
-    <LoginForm />
+    <RegisterForm />
   </div>;
 };
 
