@@ -27,12 +27,16 @@ const AuthLayout = ({children}: AuthLayoutProps) => {
                             <CarouselContent>
                                 {images.map((image, ind) => (
                                     <CarouselItem key={ind}>
-                                        <Image src={image} width={300} height={300} style={{width: "100%"}} alt="Charts"/>
+                                        <div className='text-center'>
+                                            <Image src={image} className='max-w-full mx-auto' width={300} height={200} alt="Charts"/>                      
+                                            <h2 className="text-2xl text-white font-bold text-center my-3">Visualize payment statistics</h2>
+                                            <p className="text-xs text-center text-white">These visuals are used to analyze and understand various aspects of payment activity, trends, and patterns</p>
+                                        </div>
                                     </CarouselItem>
                                 ))}
                                 
                             </CarouselContent>
-                            <div>
+                            <div className='absolute left-1/2 mt-10'>
                                 <CarouselPrevious />
                                 <CarouselNext />
                             </div>

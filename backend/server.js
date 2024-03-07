@@ -8,6 +8,8 @@ import {notFound, errorHandler} from './middleware/errorMiddleware.js'
 import paymentRoutes from './routes/paymentRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 
+import cors from 'cors'
+
 // Load environment variables
 dotenv.config()
 
@@ -16,6 +18,11 @@ new Database()
 
 // Middlewares
 app.use(express.json())
+app.use(cors())
+
+app.get('/', (req, res) => {
+    res.send('API is running...')
+})
 
 // Routes
 app.use('/api/payment', paymentRoutes)

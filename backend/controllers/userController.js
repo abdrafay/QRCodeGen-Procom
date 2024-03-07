@@ -32,7 +32,7 @@ const authUser = async (req, res) => {
 // @access  Public
 
 const registerUser = async (req, res) => {
-    const { name, email, password } = req.body
+    const { username, email, password, role, phoneNo, accountNo } = req.body
 
     const userExists = await User.findOne({ email })
 
@@ -41,7 +41,7 @@ const registerUser = async (req, res) => {
         throw new Error('User already exists')
     }
 
-    const user = await User.create({ name, email , password })
+    const user = await User.create({ username, email, password, role, phoneNo, accountNo })
 
     if (user) {
         res.status(201)
