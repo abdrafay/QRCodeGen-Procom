@@ -67,7 +67,7 @@ const PaymentForm = () => {
         const session = await getSession()
         setButtonLoading(true)
         try{
-            const {data, status} = await axios.post('http://localhost:5000/api/payment', values, {
+            const {data, status} = await axios.put('http://localhost:5000/api/payment/pay', values, {
                 headers: {
                     Authorization: `Bearer ${session}`
                 }
@@ -91,35 +91,41 @@ const PaymentForm = () => {
     
   return (
     <div className='p-5 border rounded-lg my-5'>
-    <h1 className="text-3xl font-bold">Payment request for customer</h1>
+    {/* <h1 className="text-3xl font-bold">Payment request for customer</h1> */}
 <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 my-5">
-            <FormField
-            control={form.control}
-            name="customerName"
-            render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Enter Customer Name</FormLabel>
-                    <FormControl>
-                        <Input {...field} placeholder='Enter Customer Name'/>
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-            )}
-            />
-            <FormField
-            control={form.control}
-            name="customerEmail"
-            render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                        <Input {...field} type="email" placeholder='Enter customer email'/>
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-            )}
-            />
+            <div className='flex w-full gap-2'>
+                <div className="w-5/12">
+                    <FormField
+                    control={form.control}
+                    name="customerName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Enter Customer Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} placeholder='Enter Customer Name'/>
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                </div>
+                <div className="w-7/12">
+                    <FormField
+                    control={form.control}
+                    name="customerEmail"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input {...field} type="email" placeholder='Enter customer email'/>
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                </div>
+            </div>
             <FormField
             control={form.control}
             name="paymentAmount"
@@ -185,10 +191,11 @@ const PaymentForm = () => {
                 </FormItem>
             )}
             />
-
-            <Button disabled={buttonLoading} type="submit" className="w-full bg-purple-500">
+            <div className="text-right">
+            <Button disabled={buttonLoading} type="submit" className="bg-cyan-500 mt-4">
                 {buttonLoading ? "Submitting.." : "Submit"}
             </Button>
+            </div>
         </form>
     </Form>
     </div>

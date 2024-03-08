@@ -5,7 +5,8 @@ import {
     getCustomerPaymentRequest,
     updatePaymentRequest,
     getMerchantPaymentRequest, 
-    getMerchantCustomers
+    getMerchantCustomers,
+    updatePaymentRequestInstant
 } from "../controllers/paymentController.js"
 
 import { protect, customer, merchant } from "../middleware/authMiddleware.js"
@@ -21,7 +22,7 @@ router.route('/merchant/customers').get(protect, merchant, getMerchantCustomers)
 
 router.route("/:id").put(protect, customer, updatePaymentRequest)
 // for the payment request, these 2 routes are same, but for future use, we can use the second one and add more functionality
-router.route('/pay').put(protect, customer, updatePaymentRequest)
+router.route('/pay').put(protect, customer, updatePaymentRequestInstant)
 
 
 export default router

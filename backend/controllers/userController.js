@@ -62,7 +62,7 @@ const registerUser = async (req, res) => {
 }
 
 // @desc    Get user profile
-// @route   GET /api/users/profile
+// @route   GET /api/auth/profile
 // @access  Private
 
 const getUserProfile = async (req, res) => {
@@ -85,11 +85,11 @@ const getUserProfile = async (req, res) => {
 }
 
 // @desc    Update user profile
-// @route   PUT /api/users/:id
+// @route   PUT /api/auth/
 // @access  Private
 
 const updateUserProfile = async (req, res) => {
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.user._id)
 
     if (user) {
         user.username = req.body.username || user.username

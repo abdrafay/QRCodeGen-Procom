@@ -1,4 +1,5 @@
 import React from 'react'
+import PaymentForm from './form'
 
 const InstantPayment = () => {
   return (
@@ -6,6 +7,7 @@ const InstantPayment = () => {
         <h1 className="text-5xl font-bold">
             Instant Payment
         </h1>
+        <PaymentForm />
     </div>
   )
 }

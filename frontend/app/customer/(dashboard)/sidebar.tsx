@@ -11,6 +11,11 @@ const navItems = [
     {
         path: "/customer/instant-payment",
         name: "Instant Payment"
+    },
+    {
+        path: "/customer/qr-scan",
+        name: "QR Scan"
+    
     }
 
 ]
@@ -23,10 +28,14 @@ const SideBar = () => {
     // }
 
   return (
-    <aside className='lg:w-3/12 xl:w-2/12 bg-slate-100 h-full min-h-screen py-5 px-4'>
+    <aside className='lg:w-3/12 xl:w-2/12 bg-slate-100 h-full min-h-screen py-5 px-4 fixed'>
+        
+       
+        <div className="flex flex-col gap-3">
         {navItems.map((item, index) => (
             <SideNavItem key={index} item={item} className={path === item.path ? 'bg-cyan-500 text-white': ""} />
         ))}
+        </div>
     </aside>
   )
 }

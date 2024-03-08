@@ -9,9 +9,11 @@ export async function login(formData: LoginInterface){
             
             const session = data.token;
             const role = data.role;
+            const username = data.username;
             // const expires = new Date(Date.now() + 60 * 60 * 24 * 1);
             localStorage.setItem('session', session);
             localStorage.setItem('role', role);
+            localStorage.setItem('username', username);
             return true
             // cookies().set('session', session, {expires: expires, httpOnly: true })
         }
@@ -26,8 +28,12 @@ export async function register(formData: UserInterface){
         
         if(data) {
             const session = data.token;
+            const role = data.role;
+            const username = data.username;
             // const expires = new Date(Date.now() + 60 * 60 * 24 * 1);
             localStorage.setItem('session', session);
+            localStorage.setItem('role', role);
+            localStorage.setItem('username', username);
             // cookies().set('session', session, {expires: expires, httpOnly: true })
             return true;
         }
@@ -40,12 +46,14 @@ export async function logout(){
     // cookies().set('session', "", {expires: 0, httpOnly: true});
     localStorage.removeItem('session');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
 }
 
 export async function getSession(){
     try {
         // const session = cookies().get('session')?.value;
         const session = localStorage.getItem('session');
+
 
         if(!session) return null
         return session;
@@ -62,6 +70,17 @@ export async function getRole(){
     } catch (error) {
         console.error('Error:', error);
     }
+}
+
+export async function getUsername(){
+    try {
+        const username = localStorage.getItem('username');
+        if(!username) return null
+        return username;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    return ""
 }
 
 // const setCookies = (session: string) => {

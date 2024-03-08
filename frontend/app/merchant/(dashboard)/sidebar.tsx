@@ -6,8 +6,13 @@ import { usePathname } from 'next/navigation'
 const navItems = [
     {
         path: '/merchant',
+        name: 'Dashboard',
+    },
+    {
+        path: '/merchant/payments',
         name: 'Payments',
-    },{
+    },
+    {
         path: '/merchant/create',
         name: 'Create Payment',
     },{
@@ -26,11 +31,13 @@ const SideBar = () => {
     // }
 
   return (
-    <aside className='lg:w-3/12 xl:w-2/12 bg-slate-100 h-full min-h-screen py-5 px-4'>
+    <div className='lg:w-3/12 xl:w-2/12 bg-slate-100 h-full min-h-screen py-5 px-4 fixed'>
+        <div className="flex flex-col gap-3">
         {navItems.map((item, index) => (
             <SideNavItem key={index} item={item} className={path === item.path ? 'bg-purple-500 text-white': ""} />
         ))}
-    </aside>
+        </div>
+    </div>
 )
 }
 

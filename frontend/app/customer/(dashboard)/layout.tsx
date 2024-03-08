@@ -13,7 +13,7 @@ const CustomerLayout = ({children}: CustomerLayoutProps) => {
         <Navbar />
         <div className="flex flex-wrap">
             <SideBar />
-            <div className='relative lg:9/12 xl:w-10/12 ml-auto p-5'>
+            <div className='relative lg:9/12 xl:w-10/12 ml-auto p-7'>
                 {children}
             </div>
         </div>

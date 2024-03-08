@@ -111,10 +111,32 @@ const updatePaymentRequest = async (req, res) => {
     }
 }
 
+// @desc    Update payment request
+// @route   PUT /api/payments/pay
+// @access  Private
+
+const updatePaymentRequestInstant = async (req, res) => {
+    const {paymentAmount, merchantAccountNo } = req.body
+    const payment = await Payment.find({customer: req.user._id, status: 'pending', paymentAmount, merchantAccountNo })
+    if(payment) {
+        payment.status = req.body.status || payment.status
+
+        const updatedPayment = await payment.save()
+
+        res.json(updatedPayment)
+    }
+    else {
+        res.status(404)
+        throw new Error('Payment not found')
+    }
+}
+
+
 export {
     createPaymentRequest,
     getCustomerPaymentRequest,
     updatePaymentRequest,
     getMerchantPaymentRequest,
-    getMerchantCustomers
+    getMerchantCustomers,
+    updatePaymentRequestInstant
 }

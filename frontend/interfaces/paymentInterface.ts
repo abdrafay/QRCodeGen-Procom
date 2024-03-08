@@ -1,4 +1,5 @@
 export interface Payment {
+    _id: string;
     customerAccountNo: string;
     merchantAccountNo: string;
     status: string;
