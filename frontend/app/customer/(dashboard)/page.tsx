@@ -51,10 +51,10 @@ const Customer = () => {
 
     },[])
 
-    const doPayment = async (id: string) => {
+    const doPayment = async (id: string, argStatus:string) => {
       const session = await getSession()
       const {data,status} = await axios.put(`http://localhost:5000/api/payment/${id}`, {
-        status: 'success',
+        status: argStatus,
       }, {
         headers: {
             Authorization: `Bearer ${session}`
@@ -95,8 +95,8 @@ const Customer = () => {
                 <TableCell className='flex gap-2'>
                   {payment.status === 'pending' && 
                   (<>
-                    <button onClick={() => doPayment(payment._id)} className="bg-green-500 text-white p-2 rounded-md">Pay</button>
-                  <button className="bg-red-500 text-white p-2 rounded-md">Reject</button>
+                    <button onClick={() => doPayment(payment._id, 'success')} className="bg-green-500 text-white p-2 rounded-md">Pay</button>
+                  <button onClick={() => doPayment(payment._id, 'reject')} className="bg-red-500 text-white p-2 rounded-md">Reject</button>
                   </>)
                 }
                 </TableCell>
